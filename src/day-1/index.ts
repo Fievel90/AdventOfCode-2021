@@ -1,6 +1,8 @@
 import { flow } from "fp-ts/function";
 import * as TE from "fp-ts/TaskEither";
+import * as T from "fp-ts/Task";
 import { readFile } from "@app/utils/file";
+import { NotFoundResponse, Response, SuccessfulResponse } from "@app/utils/response";
 
 const countMeasurements = (list: number[]): number =>
   list
@@ -16,6 +18,18 @@ export const main1 = flow(
   TE.map((a: string) => a.split("\n")),
   TE.map((a: string[]) => a.map(a => parseInt(a, 10))),
   TE.map(countMeasurements),
+  TE.fold(
+    (e): T.Task<Response> => (): Promise<NotFoundResponse> => Promise.resolve({
+      _tag: "NotFoundResponse",
+      code: 404,
+      body: String(e)
+    }),
+    (a): T.Task<Response> => (): Promise<SuccessfulResponse> => Promise.resolve({
+      _tag: "SuccessfulResponse",
+      code: 200,
+      body: String(a)
+    })
+  )
 );
 
 main1('src/day-1/input.txt')()
@@ -28,6 +42,18 @@ export const main2 = flow(
   TE.map((a: string[]) => a.map(a => parseInt(a, 10))),
   TE.map(mapMeasurements),
   TE.map(countMeasurements),
+  TE.fold(
+    (e): T.Task<Response> => (): Promise<NotFoundResponse> => Promise.resolve({
+      _tag: "NotFoundResponse",
+      code: 404,
+      body: String(e)
+    }),
+    (a): T.Task<Response> => (): Promise<SuccessfulResponse> => Promise.resolve({
+      _tag: "SuccessfulResponse",
+      code: 200,
+      body: String(a)
+    })
+  )
 );
 
 main2('src/day-1/input.txt')()

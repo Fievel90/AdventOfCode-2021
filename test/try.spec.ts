@@ -12,7 +12,7 @@ describe("AdventOfCode 2021 - Try things", () => {
         console.log(a);
         return a;
       }),
-      RTE.local(({ result }) => ({ ...result }))
+      // RTE.local(({ result }) => ({ ...result }))
     )({ result: "" })();
     const expected = E.left("ENOENT: no such file or directory, open 'src/day-1/non-exists.txt'");
 
