@@ -4,19 +4,19 @@ import * as T from "fp-ts/Task";
 import { readFile } from "@app/utils/file";
 import { NotFoundResponse, Response, SuccessfulResponse } from "@app/utils/response";
 
-const countMeasurements = (list: number[]): number =>
+const countMeasurements = (list: ReadonlyArray<number>): number =>
   list
     .filter((value, index, array) => value > array[index - 1])
     .length;
 
-const mapMeasurements = (list: number[]): number[] =>
+const mapMeasurements = (list: ReadonlyArray<number>): ReadonlyArray<number> =>
   list
     .map((value, index, array) => value + array[index - 1] + array[index - 2]);
 
 export const main1 = flow(
   readFile,
-  TE.map((a: string) => a.split("\n")),
-  TE.map((a: string[]) => a.map(a => parseInt(a, 10))),
+  TE.map(a => a.split("\n")),
+  TE.map(a => a.map(a => parseInt(a, 10))),
   TE.map(countMeasurements),
   TE.fold(
     (e): T.Task<Response> => (): Promise<NotFoundResponse> => Promise.resolve({
@@ -38,8 +38,8 @@ main1('src/day-1/input.txt')()
 
 export const main2 = flow(
   readFile,
-  TE.map((a: string) => a.split("\n")),
-  TE.map((a: string[]) => a.map(a => parseInt(a, 10))),
+  TE.map(a => a.split("\n")),
+  TE.map(a => a.map(a => parseInt(a, 10))),
   TE.map(mapMeasurements),
   TE.map(countMeasurements),
   TE.fold(
