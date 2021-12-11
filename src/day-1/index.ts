@@ -32,10 +32,6 @@ export const main1 = flow(
   )
 );
 
-main1('src/day-1/input.txt')()
-  .then(a => console.log('First', a))
-  .catch(a => console.log('First', a));
-
 export const main2 = flow(
   readFile,
   TE.map(a => a.split("\n")),
@@ -55,7 +51,3 @@ export const main2 = flow(
     })
   )
 );
-
-main2('src/day-1/input.txt')()
-  .then(a => console.log('Second', a))
-  .catch(a => console.log('Second', a));

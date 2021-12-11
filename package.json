@@ -1,11 +1,14 @@
 {
-  "name": "adventofcode-2020",
+  "name": "adventofcode-2021",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "day-1": "node -r ./scripts/ts-node src/day-1/index.ts"
+    "day-1": "node -r ./scripts/ts-node src/day-1/index.ts",
+    "day-2": "node -r ./scripts/ts-node src/day-2/index.ts",
+    "day-3": "node -r ./scripts/ts-node src/day-3/index.ts",
+    "day-4": "node -r ./scripts/ts-node src/day-4/index.ts"
   },
   "dependencies": {
     "fp-ts": "^2.9.1",

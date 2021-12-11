@@ -3,30 +3,9 @@ import * as TE from "fp-ts/TaskEither";
 import * as T from "fp-ts/Task";
 import * as A from "fp-ts/Array";
 import * as E from "fp-ts/Either";
-import * as t from "io-ts";
 import { readFile } from "@app/utils/file";
 import { NotFoundResponse, Response, SuccessfulResponse } from "@app/utils/response";
-
-const Command = t.type({
-  action: t.union([
-    t.literal('forward'),
-    t.literal('down'),
-    t.literal('up')
-  ]),
-  value: t.number
-})
-type Command = t.TypeOf<typeof Command>
-
-interface Position {
-  horizontal: number
-  depth: number
-}
-
-interface Position3d {
-  horizontal: number
-  depth: number
-  aim: number
-}
+import { Command, Position, Position3d } from "@app/day-2/submarine"
 
 const parseCommand = (command: string) => {
   const [action, value] = command.split(" ")
@@ -72,7 +51,6 @@ export const main1 = flow(
   readFile,
   TE.map(a => a.split("\n")),
   TE.map(A.map(parseCommand)),
-  TE.map(a => a),
   TE.chainEitherKW(E.sequenceArray),
   TE.map(moveSubmarine),
   TE.map(a => a.horizontal * a.depth),
@@ -89,10 +67,6 @@ export const main1 = flow(
     })
   )
 );
-
-main1('src/day-2/input.txt')()
-  .then(a => console.log('First', a))
-  .catch(a => console.log('First', a));
 
 export const main2 = flow(
   readFile,
@@ -114,7 +88,3 @@ export const main2 = flow(
     })
   )
 );
-
-main2('src/day-2/input.txt')()
-  .then(a => console.log('Second', a))
-  .catch(a => console.log('Second', a));
